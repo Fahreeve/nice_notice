@@ -3,8 +3,7 @@ import wx
 import MainFrame
 import NoticeFrame
 
-#self.myvk = pyvk.pyvk("fahreeve@yandex.ru", "flop1996!", "4089578", "messages")
-#self.myvk = pyvk.pyvk("login", "password", "2951857", "messages")
+#self.myvk = pyvk.pyvk("login", "password", "2951857", "messages") "4089578"
   
 #self.userdata = self.myvk.get(self.myvk.user_id, ["uid", "first_name", "last_name","online", "photo"]) #comment if you dont have internet!
 
