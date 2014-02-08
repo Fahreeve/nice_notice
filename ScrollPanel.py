@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import wx
 import ScrollBar
+import ErrorMessage
 
 
 class ScrollPanel(wx.Panel):
@@ -47,7 +48,6 @@ class ScrollPanel(wx.Panel):
         return bmp
     
     def Add(self, panel, proportion, flag, border):
-	a = self.scrollsizer.GetMinSize()
 	self.scrollsizer.Add(panel, proportion, flag, border)
 	self.scrolledpanel.Layout()
 	self.virtualsize = self.scrollsizer.GetMinSize()
@@ -78,22 +78,27 @@ class ScrollPanel(wx.Panel):
 	    self.scrolledpanel.ScrollWindow(0, - self.virtualpositiony - self.scrollsizer.GetMinSize().y + self.scrollsizer.GetSize().y) # смещаемся на разность текущенго смещения вниз и максимального смещения вниз
 	    self.virtualpositiony = - self.scrollsizer.GetMinSize().y + self.scrollsizer.GetSize().y # панель находится в самом низу
 	
-    def ErrorOn(self, text="Error"):
-	if not self.error_message[0]:
-	    #pass
-	    #self.currentposition -= 44
-	    #for mess in self.message:
-		#self.currentposition -= mess.size.y
-		#mess.SetPosition(wx.Point(0, self.currentposition))
-	    #self.currentposition = self.size.y	
-	    self.error_message = (True, ErrorMessage.ErrorMessage(self, wx.DefaultPosition))	
+    #def ErrorOn(self, text="Error"):
+	#if not self.error_message[0]:
+	    ##pass
+	    ##self.currentposition -= 44
+	    ##for mess in self.message:
+		##self.currentposition -= mess.size.y
+		##mess.SetPosition(wx.Point(0, self.currentposition))
+	    ##self.currentposition = self.size.y	
+	    #error = ErrorMessage.ErrorMessage(self, text)
+	    #self.error_message = (True, error)	
+	    #self.scrollsizer.Add(panel, proportion, flag, border)
+	    #self.scrolledpanel.Layout()
+	    #self.virtualsize = self.scrollsizer.GetMinSize()
+	    #self.scrollbar.Resize(self.virtualsize)
 	
-    def ErrorOff(self):
-	if self.error_message[0]:
-	    #pass
-	    #self.error_message[1].Destroy()
-	    #for mess in self.message:
-		#self.currentposition -= mess.size.y 
-		#mess.SetPosition(wx.Point(0, self.currentposition))
-	    #self.currentposition = self.size.y	
-	    self.error_message = (False, None)	    
+    #def ErrorOff(self):
+	#if self.error_message[0]:
+	    ##pass
+	    ##self.error_message[1].Destroy()
+	    ##for mess in self.message:
+		##self.currentposition -= mess.size.y 
+		##mess.SetPosition(wx.Point(0, self.currentposition))
+	    ##self.currentposition = self.size.y	
+	    #self.error_message = (False, None)	    

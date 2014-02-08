@@ -75,6 +75,10 @@ class MessageFrame(MainFrame.MainFrame):
     def AddMessage(self, photo, text, date, status=True):
 	self.scrollpanel.AddMessage(photo, text, date, status)
 	
+    def AddMessages(self, messages):
+	#messages = [(photo, text, date, status)]
+	self.scrollpanel.AddDialog(messages)    
+	
     def NewDialog(self, first_name, last_name, online):
 	self.first_name = first_name
 	self.last_name = last_name
@@ -87,6 +91,9 @@ class MessageFrame(MainFrame.MainFrame):
         dc = wx.ClientDC(self)
         dc.DrawBitmap(self.bmp, 0, 0, True)
         self.SetWindowShape()
+	
+    def ErrorOn(self, text = "error"):
+	self.scrollpanel.ErrorOn(text)
 	
 def cutstr(string, number):
     if len(string) > number:
@@ -105,11 +112,11 @@ if  __name__ ==  "__main__":
 	    
 	    self.mainframe.AddMessage(wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), u"1 2 3 4 5 6 7 8 9 0", 1387711111)
 	    self.mainframe.AddMessage(wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), u"1 2 7 8 9 0", 1387711111)
-	    #self.scrollpanel.AddMessage(wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), u"1 2 7 8 9 0", 1387711111)
-	    #self.scrollpanel.AddMessage(wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), u"1 2 7 8 9 0", 1387711111)
-	    #self.scrollpanel.AddMessage(wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), u"1 2 7 8 9 0", 1387711111)
+	    self.mainframe.AddMessage(wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), u"1 2 7 8 9 0", 1387711111)
+	    self.mainframe.AddMessage(wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), u"1 2 7 8 9 0", 1387711111)
+	    self.mainframe.AddMessage(wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), u"1 2 7 8 9 0", 1387711111)
 	    #self.scrollpanel.AddMessages(messages)
-	    #self.scrollpanel.ErrorOn()
+	    #self.mainframe.ErrorOn()
 	    #self.scrollpanel.ErrorOff()
 	    #self.online_status.SetOnline(False)
 	    #-----------------------------------------------------------------------	    

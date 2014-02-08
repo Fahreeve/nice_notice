@@ -2,8 +2,8 @@ import wx
 
 
 class ErrorMessage(wx.Panel):
-    def __init__(self, parent, pos, text = u"Error"):
-        wx.Panel.__init__(self, parent, wx.ID_ANY, pos, wx.Size(280, 39), wx.TAB_TRAVERSAL)
+    def __init__(self, parent, text):
+        wx.Panel.__init__(self, parent, wx.ID_ANY, wx.DefaultPosition, wx.Size(280, 39), wx.TAB_TRAVERSAL)
 	self.text = text
 	self.size = wx.Size(280, 39)
 	

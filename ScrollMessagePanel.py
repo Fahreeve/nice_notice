@@ -24,12 +24,12 @@ class ScrollMessagePanel(ScrollPanel.ScrollPanel):
 	
     def AddMessages(sel, messages):
 	#messages = [(photo, text, date, status)]
-	panels = []
 	for mess in messages:
 	    message += [MessagePanel.MessagePanel(self.scrolledpanel, mess[0], mess[1], mess[2], mess[3])]
 	self.Adds(message, 0, wx.BOTTOM, 5)
 	self.scrollbar.Bottom()
+	self.messages += message
     
     def DeleteAll(self):
 	self.scrollsizer.DeleteWindows()
-	self.messages = [] 
+	self.messages = []    
