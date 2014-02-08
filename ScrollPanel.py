@@ -14,14 +14,14 @@ class ScrollPanel(wx.Panel):
 	
 	mainsizer = wx.BoxSizer(wx.HORIZONTAL)
 		
-	self.scrolledpanel = wx.Panel(self, wx.ID_ANY, wx.DefaultPosition, wx.Size(290, 312), wx.TAB_TRAVERSAL)
+	self.scrolledpanel = wx.Panel(self, wx.ID_ANY, wx.DefaultPosition, wx.Size(size.x - 10, size.y), wx.TAB_TRAVERSAL)
 	self.scrolledpanel.SetBackgroundColour(wx.Color(255, 255, 255))
 	self.scrollsizer = wx.BoxSizer(wx.VERTICAL)
 	self.scrolledpanel.SetSizer(self.scrollsizer)
 	self.scrollsizer.FitInside(self.scrolledpanel)
 	mainsizer.Add(self.scrolledpanel, 1, wx.EXPAND | wx.ALL, 0)
 	
-	self.scrollbar = ScrollBar.ScrollBar(self, wx.ID_ANY, wx.DefaultPosition, wx.Size(10, 312), wx.TAB_TRAVERSAL)
+	self.scrollbar = ScrollBar.ScrollBar(self, wx.ID_ANY, wx.DefaultPosition, wx.Size(10, size.y), wx.TAB_TRAVERSAL)
 	mainsizer.Add(self.scrollbar, 0, wx.EXPAND, 0)	
 	
 	self.SetSizer(mainsizer)

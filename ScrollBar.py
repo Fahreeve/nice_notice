@@ -24,7 +24,10 @@ class ScrollBar(wx.Panel):
 	    self.k = 1
 	else:
 	    self.k = float(size.y) / self.GetSize().y
-	self.sizereglaget = wx.Size(size.x, int(self.GetSize().y / self.k))
+	if self.k <= 1:
+	    self.sizereglaget = self.GetSize() 
+	else:
+	    self.sizereglaget = wx.Size(size.x, int(self.GetSize().y / self.k))
 	self.reglaget = self.DrawReglaget(self.sizereglaget)
 	self.InitBuffer()
 	

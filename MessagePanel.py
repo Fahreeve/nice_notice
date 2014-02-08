@@ -4,8 +4,8 @@ import TransparentText
 
 
 class MessagePanel(wx.Panel):
-    def __init__(self, parent, pos, photo, text, date, status):
-        wx.Panel.__init__(self, parent, wx.ID_ANY, pos, wx.Size(290, -1), wx.TAB_TRAVERSAL)		
+    def __init__(self, parent, photo, text, date, status):
+        wx.Panel.__init__(self, parent, wx.ID_ANY, wx.DefaultPosition, wx.Size(290, -1), wx.TAB_TRAVERSAL)		
 	self.SetStatus(status)
         
 	sizer = wx.BoxSizer(wx.HORIZONTAL)
