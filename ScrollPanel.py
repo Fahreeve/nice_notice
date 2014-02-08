@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import wx
 import ScrollBar
 
@@ -5,8 +6,9 @@ import ScrollBar
 class ScrollPanel(wx.Panel):
     def __init__(self, parent, id, pos, size, style):
         wx.Panel.__init__(self, parent, id, pos, size, style)
-	#self.size = size
-	self.virtualsize = wx.Size(size.x, 0)
+	self.virtualsize = wx.Size(size.x, 0) # размер скролящейся области
+	self.virtualpositiony = 0 # смещение скролящихся данных отнсительно 
+				#начального положения. если больше нуля, то сместилось вверх
 	self.pos = pos
 	self.parent = parent	
 	
@@ -29,7 +31,6 @@ class ScrollPanel(wx.Panel):
 	dc.DrawBitmap(self.bmp, 0, 0, True)
 	self.Bind(wx.EVT_PAINT, self.OnPaint)
         
-        
     def CreateBacground(self):
 	size = self.GetSize()
         bmp = wx.EmptyBitmap(size.x, size.y)
@@ -50,16 +51,32 @@ class ScrollPanel(wx.Panel):
 	self.scrollsizer.Add(panel, proportion, flag, border)
 	self.scrolledpanel.Layout()
 	self.virtualsize = self.scrollsizer.GetMinSize()
+	self.scrollbar.Resize(self.virtualsize)
 
     def Adds(self, panels, proportion, flag, border):
 	for panel in panels:
 	    self.scrollsizer.Add(panel, proportion, flag, border)
 	self.virtualsize = self.scrollsizer.GetMinSize()
 	self.scrollsizer.Layout()
+	self.scrollbar.Resize(self.virtualsize)
 	
     def OnPaint(self, evt):
         dc = wx.PaintDC(self)
         dc.DrawBitmap(self.bmp, 0,0, True)
+	
+    def Scroll(self, y):
+	self.virtualpositiony += y
+	self.scrolledpanel.ScrollWindow(0, y)
+    
+    def ScrollMaxUp(self):
+	self.scrolledpanel.ScrollWindow(0, -self.virtualpositiony)
+	self.virtualpositiony = 0
+    
+    def ScrollMaxDown(self):
+	# self.virtualpositiony должно быть меньше 0, т.к смещаемся вниз
+	if self.virtualpositiony > - self.scrollsizer.GetMinSize().y + self.scrollsizer.GetSize().y:  
+	    self.scrolledpanel.ScrollWindow(0, - self.virtualpositiony - self.scrollsizer.GetMinSize().y + self.scrollsizer.GetSize().y) # смещаемся на разность текущенго смещения вниз и максимального смещения вниз
+	    self.virtualpositiony = - self.scrollsizer.GetMinSize().y + self.scrollsizer.GetSize().y # панель находится в самом низу
 	
     def ErrorOn(self, text="Error"):
 	if not self.error_message[0]:

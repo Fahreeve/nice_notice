@@ -41,3 +41,15 @@ class MessagePanel(wx.Panel):
 	    self.SetBackgroundColour(wx.Color(255, 255, 255)) # read
 	else:
 	    self.SetBackgroundColour(wx.Color(237, 241, 245)) # unread	
+	    
+	    
+#if  __name__ ==  "__main__":  
+    #class MyApp(wx.App):
+	#def OnInit(self):
+	    #self.mainframe = wx.Frame(None, -1, wx.Point(200, 200), " ")	    
+	    #self.mainframe.Show(True)  
+	    #self.SetTopWindow(self.mainframe)
+	    #return True
+    
+    #app = MyApp(0)
+    #app.MainLoop()
