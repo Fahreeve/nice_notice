@@ -58,6 +58,9 @@ class DialogsFrame(MainFrame.MainFrame):
     def AddDialogs(self, dialogs):
 	#dialogs = [(user_id, photo, title, friendphoto, text, date, status)]
 	self.scrollpanel.AddDialogs(dialogs)
+	
+    def SetOnline(self, user_id, online):
+	self.scrollpanel.SetOnline(user_id, online)
 
 
 if __name__ == "__main__":

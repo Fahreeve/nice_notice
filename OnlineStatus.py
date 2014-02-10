@@ -3,40 +3,27 @@ import wx
 
 class OnlineStatus(wx.Panel):
     def __init__(self, parent, pos, online):
-        wx.Panel.__init__(self, parent, wx.ID_ANY, pos, wx.Size(8, 8), wx.TAB_TRAVERSAL)
+        wx.Panel.__init__(self, parent, wx.ID_ANY, pos, wx.Size(8, 8), wx.TAB_TRAVERSAL|wx.TRANSPARENT_WINDOW)
         self.online = online
-	self.size = wx.Size(8, 8)
-        self.pos = pos
-	self.parent = parent
-	self.bmp = self.CreateBackground()
-	dc = wx.ClientDC(self)
-	dc.DrawBitmap(self.bmp, 0, 0, True)
-	self.Bind(wx.EVT_PAINT, self.OnPaint)  
+	self.Bind(wx.EVT_PAINT, self.OnPaint) 
+	self.Bind(wx.EVT_ERASE_BACKGROUND, self.OnErase)
 	
-    def OnPaint(self, evt):
-        dc = wx.PaintDC(self)
-        dc.DrawBitmap(self.bmp, 0,0, True)   
+    def OnPaint(self, evt=None):
+        pdc = wx.PaintDC(self)
+        dc = wx.GCDC(pdc)
+	dc.SetBackground(wx.Brush(wx.Color(63, 63, 63, 0)))
+	dc.Clear()	
+	if self.online:
+	    dc.SetBrush(wx.Brush(wx.Color(179, 179,179)))
+	    dc.SetPen(wx.Pen(wx.Color(179, 179,179), 1, wx.SOLID))
+	    dc.DrawCircle(4, 4, 4)	  
 	
     def SetOnline(self, online):
 	self.online = online
-	self.bmp = self.CreateBackground()
-	dc = wx.ClientDC(self)
-	dc.DrawBitmap(self.bmp, 0, 0, True)	
+	self.Refresh()
 	
-    def CreateBackground(self):
-	bmp = wx.EmptyBitmap(self.size.x, self.size.y)
-	memdc = wx.MemoryDC()
-	memdc.SelectObject(bmp)	
-	
-	memdc.SetBackground(wx.Brush(wx.Color(63, 63, 63)))
-	memdc.Clear()	
-	if self.online:
-	    memdc.SetBrush(wx.Brush(wx.Color(179, 179,179)))
-	    memdc.SetPen(wx.Pen(wx.Color(179, 179,179), 1, wx.SOLID))
-	    memdc.DrawCircle(4, 4, 4)
-	
-	memdc.SelectObject(wx.NullBitmap)  
-        return bmp	
+    def OnErase(self, evt):
+	pass
     
 if  __name__ ==  "__main__":  
     class MyApp(wx.App):

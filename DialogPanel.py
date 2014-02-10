@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 import wx
+import OnlineStatus
 from datetime import datetime
 
 
 class DialogPanel(wx.Panel):
     def __init__(self, parent, photo, title, friendphoto, text, date, status):
-        wx.Panel.__init__(self, parent, wx.ID_ANY, wx.DefaultPosition, wx.Size(290, -1), wx.TAB_TRAVERSAL)		
-	self.SetStatus(status)
+        wx.Panel.__init__(self, parent, wx.ID_ANY, wx.DefaultPosition, wx.Size(290, -1), wx.TAB_TRAVERSAL)
 
 	sizer = wx.BoxSizer(wx.HORIZONTAL)
 			
@@ -16,25 +16,33 @@ class DialogPanel(wx.Panel):
 	sizer2 = wx.BoxSizer(wx.VERTICAL)
 	
 	sizer6 = wx.BoxSizer(wx.HORIZONTAL)
+	toppanel = wx.Panel(self, wx.ID_ANY, wx.DefaultPosition, wx.Size(170, -1), wx.TAB_TRAVERSAL)	
+	topsizer = wx.BoxSizer( wx.HORIZONTAL )
 	
-	self.title = wx.StaticText(self, wx.ID_ANY, cutstr(title, 22), wx.DefaultPosition, wx.Size(170, -1), 0)
+	self.title = wx.StaticText(toppanel, wx.ID_ANY, cutstr(title, 22), wx.DefaultPosition, wx.DefaultSize, 0)
 	self.title.Wrap(-1)
 	self.title.SetFont(wx.Font(11, wx.MODERN, wx.NORMAL, wx.FONTWEIGHT_NORMAL, face="Tahoma"))
-	#sizer2.Add(self.title, 0, wx.TOP | wx.LEFT | wx.BOTTOM, 5)
-	sizer6.Add(self.title, 0, wx.TOP | wx.LEFT | wx.BOTTOM, 5)
+	topsizer.Add(self.title, 0, wx.ALL, 5)	
+	
+	self.onlinestatus = OnlineStatus.OnlineStatus(toppanel, wx.DefaultPosition, False)
+	topsizer.Add(self.onlinestatus, 0, wx.TOP, 11)	
+	
+	toppanel.SetSizer(topsizer)
+	sizer6.Add(toppanel, 1, wx.EXPAND, 0)
 	
 	self.date = wx.StaticText(self, wx.ID_ANY, self.GetDate(date), wx.DefaultPosition, wx.Size(70, -1), 0)
 	self.date.SetFont(wx.Font(8, wx.MODERN, wx.NORMAL, wx.FONTWEIGHT_NORMAL, face="Tahoma"))
 	self.date.SetForegroundColour(wx.Color(114, 114, 112))
 	sizer6.Add(self.date, 0, wx.TOP, 5)	
 	
-	sizer2.Add(sizer6, 1, wx.EXPAND, 0)
-	   
+	sizer2.Add(sizer6, 1, wx.EXPAND, 0)  
 	sizer4 = wx.BoxSizer(wx.HORIZONTAL)
 	
 	if friendphoto != None:
 	    self.friendphoto = wx.StaticBitmap( self, wx.ID_ANY, friendphoto, wx.DefaultPosition, wx.Size(25, 25), 0)
-	    sizer4.Add(self.friendphoto, 0, wx.LEFT | wx.BOTTOM, 5)	
+	    sizer4.Add(self.friendphoto, 0, wx.LEFT | wx.BOTTOM, 5)
+	else:
+	    self.friendphoto = None
 	
 	self.textpanel = wx.Panel(self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
 	sizer5 = wx.BoxSizer(wx.VERTICAL)
@@ -45,19 +53,16 @@ class DialogPanel(wx.Panel):
 	self.text.SetForegroundColour(wx.Color(104, 104, 102))
 	sizer5.Add(self.text, 0, wx.TOP | wx.LEFT | wx.BOTTOM, 5)
 	
-	
 	self.textpanel.SetSizer(sizer5)
-	self.textpanel.Layout()
+	#self.textpanel.Layout()
 	sizer4.Add(self.textpanel, 1, wx.ALL, 0)	
 
 	sizer2.Add(sizer4, 1, wx.EXPAND, 0)
 		
 	sizer.Add(sizer2, 1, wx.EXPAND, 0)	
 	
-	#self.date = wx.StaticText(self, wx.ID_ANY, self.GetDate(date), wx.DefaultPosition, wx.Size(70, -1), 0)
-	#self.date.SetFont(wx.Font(8, wx.MODERN, wx.NORMAL, wx.FONTWEIGHT_NORMAL, face="Tahoma"))
-	#self.date.SetForegroundColour(wx.Color(114, 114, 112))
-	#sizer.Add(self.date, 0, wx.TOP, 5)
+	self.SetStatus(status)
+	
 	self.SetSizer(sizer)
 	self.Layout()
     
@@ -72,16 +77,18 @@ class DialogPanel(wx.Panel):
 	    return time.strftime('%Y.%m.%d') #return date
 	
     def SetStatus(self, status):
-	if status:
-	    self.SetBackgroundColour(wx.Color(255, 255, 255)) # read
-	else:
-	    self.SetBackgroundColour(wx.Color(237, 241, 245)) # unread
-	#if status == 0: # если полхователь не прочитал последнее сообщение
-	    #self.SetBackgroundColour(wx.Color(237, 241, 245))
-	#elif status == 1: # если друг не прочитал последнее сообщение
-	    #self.textpanel.SetBackgroundColour(wx.Color(237, 241, 245))
-	#else: # если последнее сообщение прочитано
-	    #self.SetBackgroundColour(wx.Color(255, 255, 255))
+	if self.friendphoto == None and not status: 
+	    # если последнее сообщения отправлено пользователем, и его не прочитал его собеседник
+	    pass
+	elif self.friendphoto != None and not status: 
+	    # если сообщение отправлено собеседником, но его не прочитал пользователь
+	    self.SetBackgroundColour(wx.Color(237, 241, 245))
+	elif status == True:
+	    # если сообщения прочитаны
+	    self.SetBackgroundColour(wx.Color(255, 255, 255))
+	    
+    def SetOnline(self, online):
+	self.onlinestatus.SetOnline(online)
 	    
 def cutstr(string, number):
     if len(string) > number:

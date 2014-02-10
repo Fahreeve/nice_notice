@@ -35,3 +35,6 @@ class ScrollDialogPanel(ScrollPanel.ScrollPanel):
 	
     def GetDialogPanel(self, user_id):
 	return self.dialogs[user_id]
+    
+    def SetOnline(self, user_id, online):
+	self.dialogs[user_id].SetOnline(online)
