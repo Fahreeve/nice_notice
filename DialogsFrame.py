@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import wx
 import MainFrame
 import CustomButton
@@ -15,7 +16,7 @@ class DialogsFrame(MainFrame.MainFrame):
 
         topsizer = wx.BoxSizer(wx.HORIZONTAL)
 
-        self.title = wx.StaticText(self, wx.ID_ANY, u"string", wx.DefaultPosition, wx.Size( 253,16 ), 0)
+        self.title = wx.StaticText(self, wx.ID_ANY, title.decode('utf-8'), wx.DefaultPosition, wx.Size( 253,16 ), 0)
         self.title.Wrap(-1)
         self.title.SetFont(wx.Font(10, wx.MODERN, wx.NORMAL, wx.BOLD,face="Tahoma"))
         self.title.SetForegroundColour(wx.Colour(255, 255, 255))
@@ -51,21 +52,25 @@ class DialogsFrame(MainFrame.MainFrame):
     def OnForward(self, evt):
 	pass	
     
-    def AddDialog(self, photo, title, friendphoto, text, date, status):
-	self.scrollpanel.AddDialog(photo, title, friendphoto, text, date, status)
+    def AddDialog(self, user_id, photo, title, friendphoto, text, date, status):
+	self.scrollpanel.AddDialog(user_id, photo, title, friendphoto, text, date, status)
+	
+    def AddDialogs(self, dialogs):
+	#dialogs = [(user_id, photo, title, friendphoto, text, date, status)]
+	self.scrollpanel.AddDialogs(dialogs)
 
 
 if __name__ == "__main__":
     class MyApp(wx.App):
         def OnInit(self):
-            self.mainframe = DialogsFrame(None, -1, wx.Point(200, 200), "dialogs")
-	    self.mainframe.AddDialog(wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), "Hello world!", wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), u"1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0", 1387711111, False)
-	    self.mainframe.AddDialog(wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), "Hello world!", wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), u"1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0", 1387711111, False)
-	    self.mainframe.AddDialog(wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), "Hello world!", wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), u"1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0", 1387711111, True)
-	    self.mainframe.AddDialog(wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), "Hello world!", wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), u"1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0", 1387711111, True)
-	    self.mainframe.AddDialog(wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), "Hello world!", wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), u"1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0", 1387711111, False)
-	    self.mainframe.AddDialog(wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), "Hello world!", wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), u"1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0", 1387711111, False)
-	    self.mainframe.AddDialog(wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), "Hello world!", wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), u"1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0", 1387711111, False)
+            self.mainframe = DialogsFrame(None, -1, wx.Point(200, 200), "Диалоги")
+	    self.mainframe.AddDialog(0, wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), "Hello world!", wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), u"1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0", 1387711111, False)
+	    self.mainframe.AddDialog(1, wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), "Hello world!", wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), u"1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0", 1387711111, False)
+	    self.mainframe.AddDialog(2, wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), "Hello world!", wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), u"1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0", 1387711111, True)
+	    self.mainframe.AddDialog(3, wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), "Hello world!", wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), u"1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0", 1387711111, True)
+	    self.mainframe.AddDialog(4, wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), "Hello world!", wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), u"1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0", 1387711111, False)
+	    self.mainframe.AddDialog(5, wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), "Hello world!", wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), u"1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0", 1387711111, False)
+	    self.mainframe.AddDialog(6, wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), "Hello world!", wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), u"1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0", 1387711111, False)
 	    self.mainframe.Show(True)
             self.SetTopWindow(self.mainframe)
             return True

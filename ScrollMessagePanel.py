@@ -11,11 +11,11 @@ class ScrollMessagePanel(ScrollPanel.ScrollPanel):
 	self.scrollbar.Bottom() 
 	self.scrolledpanel.SetBackgroundColour(wx.Color(237, 237, 237))
 	self.error_message = (False, None)
-	self.messages = []       
+	self.messages = dict()       
     
-    def AddMessage(self, photo, text, date, status):
+    def AddMessage(self, id, photo, text, date, status):
 	message = MessagePanel.MessagePanel(self.scrolledpanel, photo, text, date, status)
-	self.messages += [message] 
+	self.messages[id] = message # доавляю панель в словарь 
 	self.Add(message, 0, wx.BOTTOM, 1)
 	if -self.virtualpositiony <= self.scrollsizer.GetSize().y: 
 	    # если размер смещения меньше, чем размер окна
@@ -32,13 +32,22 @@ class ScrollMessagePanel(ScrollPanel.ScrollPanel):
 	    self.virtualpositiony -= delta    
 	
     def AddMessages(sel, messages):
-	#messages = [(photo, text, date, status)]
+	#messages = [(id, photo, text, date, status)]
+	message = []
 	for mess in messages:
-	    message += [MessagePanel.MessagePanel(self.scrolledpanel, mess[0], mess[1], mess[2], mess[3])]
+	    panel = MessagePanel.MessagePanel(self.scrolledpanel, mess[0], mess[1], mess[2], mess[3])
+	    self.messages[id] = panel
+	    message += [panel]
 	self.Adds(message, 0, wx.BOTTOM, 5)
 	self.scrollbar.Bottom()
-	self.messages += message
     
     def DeleteAll(self):
 	self.scrollsizer.DeleteWindows()
-	self.messages = []    
+	self.messages = dict()
+	
+    def DeleteMessagePanel(self, id):
+	self.DeletePanel(self.messages[id])
+	del self.messages[id]
+	
+    def GetMessagePanel(self, id):
+	return self.messages[id]

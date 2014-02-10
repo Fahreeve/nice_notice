@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import wx
 import CustomButton
 import TextPanel
@@ -72,11 +73,11 @@ class MessageFrame(MainFrame.MainFrame):
 	#self.parent.OnClose()
 	pass
     
-    def AddMessage(self, photo, text, date, status=True):
-	self.scrollpanel.AddMessage(photo, text, date, status)
+    def AddMessage(self, id, photo, text, date, status=True):
+	self.scrollpanel.AddMessage(id, photo, text, date, status)
 	
     def AddMessages(self, messages):
-	#messages = [(photo, text, date, status)]
+	#messages = [(id, photo, text, date, status)]
 	self.scrollpanel.AddDialog(messages)    
 	
     def NewDialog(self, first_name, last_name, online):
@@ -108,13 +109,13 @@ if  __name__ ==  "__main__":
 	def OnInit(self):
 	    self.mainframe = MessageFrame(None, -1, wx.Point(200, 200), "abcldmgtlrmlgmglmrgml abcmglrmhmkmhkdnhktnh", True)
 	    #--Test-----------------------------------------------------------------
-	    self.mainframe.AddMessage(wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), u"1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 ", 1387711111)
+	    self.mainframe.AddMessage(1, wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), u"1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 ", 1387711111)
 	    
-	    self.mainframe.AddMessage(wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), u"1 2 3 4 5 6 7 8 9 0", 1387711111)
-	    self.mainframe.AddMessage(wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), u"1 2 7 8 9 0", 1387711111)
-	    self.mainframe.AddMessage(wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), u"1 2 7 8 9 0", 1387711111)
-	    self.mainframe.AddMessage(wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), u"1 2 7 8 9 0", 1387711111)
-	    self.mainframe.AddMessage(wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), u"1 2 7 8 9 0", 1387711111)
+	    self.mainframe.AddMessage(1, wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), u"1 2 3 4 5 6 7 8 9 0", 1387711111)
+	    self.mainframe.AddMessage(2, wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), u"1 2 7 8 9 0", 1387711111)
+	    self.mainframe.AddMessage(3, wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), u"1 2 7 8 9 0", 1387711111)
+	    self.mainframe.AddMessage(4, wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), u"1 2 7 8 9 0", 1387711111)
+	    self.mainframe.AddMessage(5, wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), u"1 2 7 8 9 0", 1387711111)
 	    #self.scrollpanel.AddMessages(messages)
 	    #self.mainframe.ErrorOn()
 	    #self.scrollpanel.ErrorOff()

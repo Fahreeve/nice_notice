@@ -77,4 +77,8 @@ class ScrollPanel(wx.Panel):
 	# self.virtualpositiony должно быть меньше 0, т.к смещаемся вниз
 	if self.virtualpositiony > - self.scrollsizer.GetMinSize().y + self.scrollsizer.GetSize().y:  
 	    self.scrolledpanel.ScrollWindow(0, - self.virtualpositiony - self.scrollsizer.GetMinSize().y + self.scrollsizer.GetSize().y) # смещаемся на разность текущенго смещения вниз и максимального смещения вниз
-	    self.virtualpositiony = - self.scrollsizer.GetMinSize().y + self.scrollsizer.GetSize().y # панель находится в самом низу    
+	    self.virtualpositiony = - self.scrollsizer.GetMinSize().y + self.scrollsizer.GetSize().y # панель находится в самом низу 
+	    
+    def DeletePanel(self, panel):
+	self.scrollsizer.Remove(panel)
+	self.scrollsizer.Layout()
