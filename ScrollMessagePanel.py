@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import wx
 import ScrollPanel
 import MessagePanel
@@ -16,11 +17,19 @@ class ScrollMessagePanel(ScrollPanel.ScrollPanel):
 	message = MessagePanel.MessagePanel(self.scrolledpanel, photo, text, date, status)
 	self.messages += [message] 
 	self.Add(message, 0, wx.BOTTOM, 1)
-	a = self.scrollsizer.GetSize().y - self.scrollsizer.GetMinSize().y
-	self.scrolledpanel.ScrollWindow(0, a)
-	self.scrollbar.Bottom()
-	if a < 0:
-	    self.virtualpositiony += a
+	if -self.virtualpositiony <= self.scrollsizer.GetSize().y: 
+	    # если размер смещения меньше, чем размер окна
+	    if -self.virtualpositiony + message.GetSize().y + 1 > self.scrollsizer.GetSize().y: 
+		# если после добавления элемента размер окна
+		# меньше размера смещения, то проскролисть вниз на разность смещения и размера окна
+		self.virtualpositiony = -self.scrollsizer.GetMinSize().y + self.scrollsizer.GetSize().y
+		self.scrolledpanel.ScrollWindow(0, self.virtualpositiony)
+	else: 
+	    # если больше, то смещаем на размер только что добавленной панели и 
+	    #плюс 1 пиксель для горизонтальной линии разделения
+	    delta = self.scrollsizer.GetMinSize().y - self.scrollsizer.GetSize().y
+	    self.scrolledpanel.ScrollWindow(0, -delta)
+	    self.virtualpositiony -= delta    
 	
     def AddMessages(sel, messages):
 	#messages = [(photo, text, date, status)]

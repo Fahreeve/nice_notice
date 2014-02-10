@@ -69,36 +69,12 @@ class ScrollPanel(wx.Panel):
 	self.scrolledpanel.ScrollWindow(0, y)
     
     def ScrollMaxUp(self):
-	self.scrolledpanel.ScrollWindow(0, -self.virtualpositiony)
+	self.scrolledpanel.ScrollWindow(0, - self.virtualpositiony)
 	self.virtualpositiony = 0
+	    
     
     def ScrollMaxDown(self):
 	# self.virtualpositiony должно быть меньше 0, т.к смещаемся вниз
 	if self.virtualpositiony > - self.scrollsizer.GetMinSize().y + self.scrollsizer.GetSize().y:  
 	    self.scrolledpanel.ScrollWindow(0, - self.virtualpositiony - self.scrollsizer.GetMinSize().y + self.scrollsizer.GetSize().y) # смещаемся на разность текущенго смещения вниз и максимального смещения вниз
-	    self.virtualpositiony = - self.scrollsizer.GetMinSize().y + self.scrollsizer.GetSize().y # панель находится в самом низу
-	
-    #def ErrorOn(self, text="Error"):
-	#if not self.error_message[0]:
-	    ##pass
-	    ##self.currentposition -= 44
-	    ##for mess in self.message:
-		##self.currentposition -= mess.size.y
-		##mess.SetPosition(wx.Point(0, self.currentposition))
-	    ##self.currentposition = self.size.y	
-	    #error = ErrorMessage.ErrorMessage(self, text)
-	    #self.error_message = (True, error)	
-	    #self.scrollsizer.Add(panel, proportion, flag, border)
-	    #self.scrolledpanel.Layout()
-	    #self.virtualsize = self.scrollsizer.GetMinSize()
-	    #self.scrollbar.Resize(self.virtualsize)
-	
-    #def ErrorOff(self):
-	#if self.error_message[0]:
-	    ##pass
-	    ##self.error_message[1].Destroy()
-	    ##for mess in self.message:
-		##self.currentposition -= mess.size.y 
-		##mess.SetPosition(wx.Point(0, self.currentposition))
-	    ##self.currentposition = self.size.y	
-	    #self.error_message = (False, None)	    
+	    self.virtualpositiony = - self.scrollsizer.GetMinSize().y + self.scrollsizer.GetSize().y # панель находится в самом низу    
