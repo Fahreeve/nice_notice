@@ -8,11 +8,13 @@ import MainFrame
 
 
 class MessageFrame(MainFrame.MainFrame):
-    def __init__(self, parent, id, pos, title, online):
+    def __init__(self, parent, id, pos, myavatar, title, online):
         MainFrame.MainFrame.__init__(self, parent, id, pos)
 	
 	self.title = title
 	self.online = online
+	
+	self.myavatar = myavatar
 
 	mainsizer = wx.BoxSizer(wx.VERTICAL)
 					
@@ -57,7 +59,7 @@ class MessageFrame(MainFrame.MainFrame):
 
 	mainsizer.AddSpacer(wx.Size(0, 3), 0, 0, 5)
 	
-	self.textpanel = TextPanel.TextPanel(self, wx.ID_ANY, wx.Bitmap( u"C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg", wx.BITMAP_TYPE_ANY ), wx.DefaultPosition, wx.Size(300, 45), wx.TAB_TRAVERSAL)
+	self.textpanel = TextPanel.TextPanel(self, wx.ID_ANY, self.myavatar, wx.DefaultPosition, wx.Size(300, 45), wx.TAB_TRAVERSAL)
 	mainsizer.Add(self.textpanel, 0, wx.LEFT, 12)
 
 	mainsizer.AddSpacer(wx.Size(0, 3), 0, 0, 5)
@@ -77,6 +79,10 @@ class MessageFrame(MainFrame.MainFrame):
     
     def AddMessage(self, id, photo, text, date, status=True):
 	self.scrollpanel.AddMessage(id, photo, text, date, status)
+	
+    def AddMyMessage(self, photo, text, date):
+	#id = self.friend.
+	self.scrollpanel.AddMessage(date, photo, text, date, False) #временное решение
 	
     def AddMessages(self, messages):
 	#messages = [(id, photo, text, date, status)]
@@ -105,7 +111,7 @@ def cutstr(string, number):
 if  __name__ ==  "__main__":  
     class MyApp(wx.App):
 	def OnInit(self):
-	    self.mainframe = MessageFrame(None, -1, wx.Point(200, 200), "abcldmgtlrmlgmglmrgml abcmglrmhmkmhkdnhktnh", True)
+	    self.mainframe = MessageFrame(None, -1, wx.Point(200, 200), wx.Bitmap( u"C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg", wx.BITMAP_TYPE_ANY ), "abcldmgtlrmlgmglmrgml abcmglrmhmkmhkdnhktnh", True)
 	    #--Test-----------------------------------------------------------------
 	    self.mainframe.AddMessage(1, wx.Bitmap("C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg"), u"1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 ", 1387711111)
 	    
