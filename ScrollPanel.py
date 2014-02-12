@@ -15,37 +15,27 @@ class ScrollPanel(wx.Panel):
 	
 	mainsizer = wx.BoxSizer(wx.HORIZONTAL)
 		
-	self.scrolledpanel = wx.Panel(self, wx.ID_ANY, wx.DefaultPosition, wx.Size(size.x - 10, size.y), wx.TAB_TRAVERSAL)
+	self.scrolledpanel = wx.Panel(self, wx.ID_ANY, wx.DefaultPosition, wx.Size(size.x - 11, size.y), wx.TAB_TRAVERSAL)
 	self.scrolledpanel.SetBackgroundColour(wx.Color(255, 255, 255))
 	self.scrollsizer = wx.BoxSizer(wx.VERTICAL)
 	self.scrolledpanel.SetSizer(self.scrollsizer)
 	self.scrollsizer.FitInside(self.scrolledpanel)
-	mainsizer.Add(self.scrolledpanel, 1, wx.EXPAND | wx.ALL, 0)
+	mainsizer.Add(self.scrolledpanel, 1, wx.EXPAND | wx.LEFT, 1)
 	
 	self.scrollbar = ScrollBar.ScrollBar(self, wx.ID_ANY, wx.DefaultPosition, wx.Size(10, size.y), wx.TAB_TRAVERSAL)
 	mainsizer.Add(self.scrollbar, 0, wx.EXPAND, 0)	
 	
 	self.SetSizer(mainsizer)
 	self.Layout()
-	self.bmp = self.CreateBacground()
-	dc = wx.ClientDC(self)
-	dc.DrawBitmap(self.bmp, 0, 0, True)
 	self.Bind(wx.EVT_PAINT, self.OnPaint)
-        
-    def CreateBacground(self):
+    
+    def OnPaint(self, evt):
+        dc = wx.PaintDC(self)
+	dc.SetPen(wx.Pen(wx.Color(63, 63, 63), 1, wx.SOLID))
 	size = self.GetSize()
-        bmp = wx.EmptyBitmap(size.x, size.y)
-        memdc = wx.MemoryDC()
-        memdc.SelectObject(bmp)
-        memdc.SetBackground(wx.Brush(wx.Color(255, 255, 255)))
-        memdc.Clear()
-	
-	memdc.SetPen(wx.Pen(wx.Color(63, 63, 63), 1, wx.SOLID))
-	memdc.DrawPoint(0, 0)
-	memdc.DrawPoint(size.x - 1, size.y - 1)
-	memdc.DrawPoint(size.x - 1, 0)
-	memdc.DrawPoint(0, size.y - 1)
-        return bmp
+	# рисуется левая верхняя и левая нижняя точки, остальные две рисуются в скроллбаре
+	dc.DrawPoint(0, 0)
+	dc.DrawPoint(0, size.y - 1)    
     
     def Add(self, panel, proportion, flag, border):
 	self.scrollsizer.Add(panel, proportion, flag, border)
@@ -59,10 +49,6 @@ class ScrollPanel(wx.Panel):
 	self.virtualsize = self.scrollsizer.GetMinSize()
 	self.scrollsizer.Layout()
 	self.scrollbar.Resize(self.virtualsize)
-	
-    def OnPaint(self, evt):
-        dc = wx.PaintDC(self)
-        dc.DrawBitmap(self.bmp, 0,0, True)
 	
     def Scroll(self, y):
 	self.virtualpositiony += y

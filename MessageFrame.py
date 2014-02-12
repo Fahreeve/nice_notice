@@ -8,7 +8,7 @@ import MainFrame
 
 
 class MessageFrame(MainFrame.MainFrame):
-    def __init__(self, parent, id, pos, title, online, messages=[]):
+    def __init__(self, parent, id, pos, title, online):
         MainFrame.MainFrame.__init__(self, parent, id, pos)
 	
 	self.title = title
@@ -57,9 +57,11 @@ class MessageFrame(MainFrame.MainFrame):
 
 	mainsizer.AddSpacer(wx.Size(0, 3), 0, 0, 5)
 	
-	self.textpanel = TextPanel.TextPanel(self, wx.ID_ANY, wx.DefaultPosition, wx.Size(300, 45), wx.TAB_TRAVERSAL)
+	self.textpanel = TextPanel.TextPanel(self, wx.ID_ANY, wx.Bitmap( u"C:\\Projects\\vk_messenger\\2G3ZSYjqBWw.jpg", wx.BITMAP_TYPE_ANY ), wx.DefaultPosition, wx.Size(300, 45), wx.TAB_TRAVERSAL)
 	mainsizer.Add(self.textpanel, 0, wx.LEFT, 12)
 
+	mainsizer.AddSpacer(wx.Size(0, 3), 0, 0, 5)
+	
 	self.SetSizer(mainsizer)
 	self.Layout()
 	
@@ -85,16 +87,12 @@ class MessageFrame(MainFrame.MainFrame):
 	self.last_name = last_name
 	self.online = online
 	
-	self.scrollpanel.ErrorOff()
 	self.scrollpanel.DeleteAll()
 	
 	self.bmp = self.CreateBackground(325, 420)
         dc = wx.ClientDC(self)
         dc.DrawBitmap(self.bmp, 0, 0, True)
         self.SetWindowShape()
-	
-    def ErrorOn(self, text = "error"):
-	self.scrollpanel.ErrorOn(text)
 	
 def cutstr(string, number):
     if len(string) > number:

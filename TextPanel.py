@@ -11,7 +11,7 @@ class TextPanel(wx.Panel):
 	self.avatar = wx.StaticBitmap( self, wx.ID_ANY, avatar, wx.DefaultPosition, wx.DefaultSize, 0)
 	bSizer3.Add(self.avatar, 0, wx.ALL, 5)
 	
-	self.textctrl = wx.TextCtrl(self, wx.ID_ANY, size=wx.Size(235, -1), style=wx.TE_MULTILINE|wx.TE_NO_VSCROLL|wx.TE_RICH2|wx.BORDER_NONE) #|wx.TE_NOHIDESEL|
+	self.textctrl = wx.TextCtrl(self, wx.ID_ANY, size=wx.Size(235, -1), style=wx.TE_MULTILINE|wx.TE_NO_VSCROLL|wx.TE_RICH2|wx.BORDER_NONE)
 	font = wx.Font(10, wx.MODERN, wx.NORMAL,wx.FONTWEIGHT_NORMAL, face="Tahoma")
 	self.textctrl.SetFont(font)	
 	

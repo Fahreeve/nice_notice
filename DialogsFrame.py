@@ -34,11 +34,9 @@ class DialogsFrame(MainFrame.MainFrame):
 
         mainsizer.AddSpacer(wx.Size(0, 9), 0, 0, 5)
 
-        self.scrollpanel = ScrollDialogPanel.ScrollDialogPanel(self, wx.ID_ANY, wx.DefaultPosition, wx.Size(300, 370), wx.TAB_TRAVERSAL)
-        self.scrollpanel.SetMinSize(wx.Size(300, 370))
+        self.scrollpanel = ScrollDialogPanel.ScrollDialogPanel(self, wx.ID_ANY, wx.DefaultPosition, wx.Size(300, 374), wx.TAB_TRAVERSAL)
+        self.scrollpanel.SetMinSize(wx.Size(300, 374))
         mainsizer.Add(self.scrollpanel, 0, wx.LEFT, 12)
-
-        #mainsizer.AddSpacer(wx.Size( 0, 3), 0, 0, 5)
 
         self.SetSizer(mainsizer)
         self.Layout()

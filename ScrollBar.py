@@ -36,7 +36,12 @@ class ScrollBar(wx.Panel):
         dc = wx.BufferedDC(None, self.buffer)
         dc.SetBackground(wx.Brush(wx.Color(255, 255, 255)))
         dc.Clear()  
-	dc.DrawBitmap(self.reglaget, self.posreglaget.x, self.posreglaget.y) 
+	dc.DrawBitmap(self.reglaget, self.posreglaget.x, self.posreglaget.y)
+	# рисуются правая верхняя и правая нижняя точки, остальные рисуются в scrollpanel.py
+	dc.SetPen(wx.Pen(wx.Color(63, 63, 63), 1, wx.SOLID))
+	size = self.GetSize()
+	dc.DrawPoint(size.x - 1, size.y - 1)
+	dc.DrawPoint(size.x - 1, 0)	
 	
     def OnLeftDown(self, event):
 	self.posdown = event.GetPosition()
@@ -68,12 +73,16 @@ class ScrollBar(wx.Panel):
         event.Skip()
 	
     def OnPaint(self, event):
-        dc = wx.BufferedPaintDC(self, self.buffer)  
+        dc = wx.BufferedPaintDC(self, self.buffer)  	
 	
     def DrawMotion(self, dc, posy):
 	dc.SetBackground(wx.Brush(wx.Color(255, 255, 255)))
 	dc.Clear()
-	dc.DrawBitmap(self.reglaget, 0, posy) 
+	dc.DrawBitmap(self.reglaget, 0, posy)
+	dc.SetPen(wx.Pen(wx.Color(63, 63, 63), 1, wx.SOLID))
+	size = self.GetSize()
+	dc.DrawPoint(size.x - 1, size.y - 1)
+	dc.DrawPoint(size.x - 1, 0)	
 	
     def Bottom(self):
 	self.posreglaget.y = self.GetSize().y - self.sizereglaget.y

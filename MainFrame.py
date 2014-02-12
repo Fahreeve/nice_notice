@@ -1,9 +1,10 @@
+# -*- coding: utf-8 -*-
 import wx
         
 
 class MainFrame(wx.Frame):
     def __init__(self, parent, id, pos):
-	size = wx.Size(325, 420)
+	size = wx.Size(324, 423)
         wx.Frame.__init__(self, parent, id, "", pos, size, 
                         style = wx.FRAME_SHAPED | wx.SIMPLE_BORDER |
                         wx.FRAME_NO_TASKBAR)
