@@ -1,107 +1,76 @@
 import wx
 import TransparentText
-import CloseButton
+import CustomButton
+import MainFrame
 
 
-class NoticeFrame(wx.Frame):
+class NoticeFrame(MainFrame.MainFrame):
     def __init__(self, parent, id, pos, avatar, title, first_name, last_name, text):
-        wx.Frame.__init__(self, parent, id, "title", pos, size=(380, 120), 
-                            style=wx.FRAME_SHAPED | wx.SIMPLE_BORDER |
-                            wx.FRAME_NO_TASKBAR)  
+	MainFrame.MainFrame.__init__(self, parent, id, pos, size=wx.Size(380, 100))
 	self.first_name = first_name
         self.last_name = last_name
 	self.title = title
 	self.text = text
-	self.avatar = wx.StaticBitmap(self, wx.ID_ANY, avatar, wx.Point(13, 43), wx.DefaultSize, 0)
-	self.size = self.GetSize()
 	
-	n = len(first_name) + len(last_name)
+	mainsizer = wx.BoxSizer(wx.VERTICAL)
+			
+	titlesizer = wx.BoxSizer(wx.HORIZONTAL)
 	
-	self.closebutton = CloseButton.CloseButton(self, wx.ID_ANY, wx.Point(345, 17), wx.Size(17, 16), wx.TAB_TRAVERSAL)	
+	titlesizer.AddSpacer((13, 0), 0, 0, 0)
 	
-	self.text = TransparentText.TransparentText(self, wx.ID_ANY, self.EditText(text, n), wx.Point(76, 45), wx.Size(290, -1))
-	self.text.Wrap(230)
+	self.title = wx.StaticText( self, wx.ID_ANY, self.title, wx.DefaultPosition, wx.Size(335, -1), 0)
+	self.title.Wrap(-1)
+	self.title.SetFont(wx.Font(10, wx.MODERN, wx.NORMAL, wx.BOLD, face="Tahoma"))
+	self.title.SetForegroundColour(wx.Color(255, 255, 255))
+	self.title.SetBackgroundColour(wx.Color(63, 63, 63))
+	titlesizer.Add(self.title, 0, wx.TOP, 15)
+
+	self.closebutton = CustomButton.CustomButton(self, wx.ID_ANY, wx.Bitmap("closebutton.png"), wx.DefaultPosition, wx.Size(17,16), wx.TAB_TRAVERSAL)
+	titlesizer.Add(self.closebutton, 1, wx.TOP, 15)
+	
+	mainsizer.Add(titlesizer, 0, 0, 0)
+	
+	bodysizer = wx.BoxSizer(wx.HORIZONTAL)
+	
+	bodysizer.AddSpacer((12, 0), 0, 0, 0)
+	
+	self.avatar = wx.StaticBitmap(self, wx.ID_ANY, avatar, wx.DefaultPosition, wx.Size(50,50), 0)
+	bodysizer.Add(self.avatar, 0, wx.TOP, 7)
+	
+	bodysizer.AddSpacer((7, 0), 0, 0, 0)
+	
+	textsizer = wx.BoxSizer(wx.VERTICAL)
+	
+	self.first_last_name = wx.StaticText(self, wx.ID_ANY, first_name + " " + last_name, wx.DefaultPosition, wx.DefaultSize, 0)
+	self.first_last_name.Wrap(-1)
+	self.first_last_name.SetFont(wx.Font(10, wx.MODERN, wx.NORMAL, wx.BOLD, face="Tahoma"))
+	self.first_last_name.SetForegroundColour(wx.Color(188, 222, 249))
+	self.first_last_name.SetBackgroundColour(wx.Color(63, 63, 63))	
+	textsizer.Add(self.first_last_name, 0, wx.TOP, 5)
+	
+	self.text = wx.StaticText(self, wx.ID_ANY, text, wx.DefaultPosition, wx.DefaultSize, 0)
+	self.text.Wrap(-1)
 	self.text.SetForegroundColour(wx.Color(255, 255, 255))
-	number_lines = len(self.text.GetLabel().split("\n"))
-	if 10 + 16 * number_lines > 100:
-	    self.size = wx.Size(380, 55 + 16 * number_lines)
-	    self.text.SetSize(wx.Size(290, 10 + 16 * number_lines))
-	    self.SetSize(self.size)
-	else:
-	    self.size = wx.Size(380, 120)
-	    
-	self.bmp = self.CreateBackground(self.size.x, self.size.y) 
-	#print self.text.GetSize(), self.GetSize(), 16 * number_lines 
-	#self.SetClientSize((self.bmp.GetWidth(), self.bmp.GetHeight()))
-	#dc = wx.ClientDC(self)
-	#dc.DrawBitmap(self.bmp, 0, 0, True)	
+	self.text.SetBackgroundColour(wx.Color(63, 63, 63))		
+	textsizer.Add(self.text, 0, wx.TOP, 5)
 	
-	self.SetWindowShape()
+	bodysizer.Add(textsizer, 0, 0, 0)
 	
-	self.Bind(wx.EVT_PAINT, self.OnPaint)
-        self.Bind(wx.EVT_WINDOW_CREATE, self.SetWindowShape)
-	self.closebutton.Bind(wx.EVT_LEFT_UP, self.OnMinimize)
-    
-    def SetWindowShape(self, evt=None):                  
-        r = wx.RegionFromBitmap(self.bmp)                
-        self.SetShape(r)	
+	mainsizer.Add(bodysizer, 0, 0, 0)
+	
+	self.SetSizer(mainsizer)
+	self.Layout()
+	
+	self.PlaySound()
+	
+	self.closebutton.Bind(wx.EVT_LEFT_UP, self.OnMinimize)	
 	
     def OnMinimize(self, evt=None):
 	self.Show(False)
     
-    def OnPaint(self, evt):
-        dc = wx.PaintDC(self)
-        dc.DrawBitmap(self.bmp, 0,0, True) 
-	
-    def CreateBackground(self, size_x, size_y):
-        bmp = wx.EmptyBitmap(size_x, size_y)
-        memdc = wx.MemoryDC()
-        memdc.SelectObject(bmp)
-        memdc.SetBackground(wx.Brush(wx.Color(63, 63, 63)))
-        memdc.Clear()
-	
-        memdc.SetPen(wx.Pen(wx.Color(0,255,0), 1, wx.SOLID))
-        memdc.DrawPoint(0, 0) 
-        memdc.DrawPoint(0, 1)
-        memdc.DrawPoint(0, 2)
-        memdc.DrawPoint(1, 0)
-        memdc.DrawPoint(1, 1)
-        memdc.DrawPoint(2, 0)
-        memdc.DrawPoint(size_x - 2, 0)
-        memdc.DrawPoint(size_x - 3, 0)
-        memdc.DrawPoint(size_x - 4, 0)
-        memdc.DrawPoint(size_x - 2, 1)
-        memdc.DrawPoint(size_x - 3, 1)
-        memdc.DrawPoint(size_x - 2, 2)
-        memdc.DrawPoint(size_x - 2, size_y - 4)
-        memdc.DrawPoint(size_x - 2, size_y - 3)
-        memdc.DrawPoint(size_x - 3, size_y - 3)
-        memdc.DrawPoint(size_x - 2, size_y - 2)
-        memdc.DrawPoint(size_x - 3, size_y - 2)
-        memdc.DrawPoint(size_x - 4, size_y - 2)
-        memdc.DrawPoint(0, size_y - 4)
-        memdc.DrawPoint(0, size_y - 3)
-        memdc.DrawPoint(1, size_y - 3)
-        memdc.DrawPoint(0, size_y - 2)
-        memdc.DrawPoint(1, size_y - 2)
-        memdc.DrawPoint(2, size_y - 2)
-        
-        memdc.SetFont(wx.Font(10, wx.MODERN, wx.NORMAL, wx.BOLD,face="Tahoma"))
-	memdc.SetTextForeground(wx.Color(188, 222, 249))
-	memdc.DrawText(self.first_name + " " + self.last_name, 75, 45)
-	
-	memdc.SetTextForeground(wx.Color(255, 255, 255))
-	memdc.DrawText(self.title, 13, 17)	
-	
-        memdc.SelectObject(wx.NullBitmap) 
-        image = bmp.ConvertToImage()
-        image.SetMaskColour(0, 255, 0)
-        image.SetMask(True)            
-        bmp = wx.BitmapFromImage(image) 
-        return bmp    
-    
-    def EditText(self, text, n):
-	return " " * int(1.85 * n) + text
+    def PlaySound(self):
+	self.sound = wx.Sound("new_message.wav")
+	self.sound.Play(wx.SOUND_ASYNC)
  
  
 if  __name__ ==  "__main__":
